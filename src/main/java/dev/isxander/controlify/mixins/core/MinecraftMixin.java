@@ -112,7 +112,7 @@ public abstract class MinecraftMixin implements InitialScreenRegistryDuck {
     }
 
     @Inject(
-            method = "runTick",
+            method = "renderFrame",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/renderer/GameRenderer;render(Lnet/minecraft/client/DeltaTracker;Z)V"

@@ -43,7 +43,6 @@
     "feature.patches.analogueboat.LocalPlayerMixin",
     "feature.patches.bookfocusfix.BookEditScreenMixin",
     "feature.patches.keymessages.ClientPacketListenerMixin",
-    "feature.patches.keymessages.DemoIntroScreenMixin",
     "feature.patches.keymessages.MovementTutorialStepInstanceMixin",
     "feature.patches.keymessages.OpenInventoryTutorialStepMixin",
     "feature.patches.keymessages.PunchTreeTutorialStepInstanceMixin",

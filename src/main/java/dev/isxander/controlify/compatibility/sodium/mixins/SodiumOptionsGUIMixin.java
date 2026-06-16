@@ -1,5 +1,5 @@
 /*? if sodium {*/
-/*package dev.isxander.controlify.compatibility.sodium.mixins;
+package dev.isxander.controlify.compatibility.sodium.mixins;
 
 import dev.isxander.controlify.compatibility.sodium.screenop.SodiumGuiScreenProcessor;
 import dev.isxander.controlify.compatibility.sodium.screenop.SodiumScreenOperations;
@@ -12,25 +12,21 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Comparator;
 import java.util.List;
 
-import net.caffeinemc.mods.sodium.client.gui.SodiumOptionsGUI;
-import net.caffeinemc.mods.sodium.client.gui.options.OptionPage;
+import net.caffeinemc.mods.sodium.client.config.structure.Page;
+import net.caffeinemc.mods.sodium.client.gui.VideoSettingsScreen;
 import net.caffeinemc.mods.sodium.client.gui.options.control.ControlElement;
 import net.caffeinemc.mods.sodium.client.gui.widgets.FlatButtonWidget;
+import net.caffeinemc.mods.sodium.client.gui.widgets.OptionListWidget;
 
-@Mixin(SodiumOptionsGUI.class)
+@Mixin(VideoSettingsScreen.class)
 public abstract class SodiumOptionsGUIMixin extends Screen implements ScreenProcessorProvider, SodiumScreenOperations {
-    @Shadow @Final private List<ControlElement<?>> controls;
+    @Shadow private OptionListWidget optionList;
 
     @Shadow
-    @Final
-    private List<OptionPage> pages;
-    @Shadow
-    private OptionPage currentPage;
-
-    @Shadow
-    public abstract void setPage(OptionPage page);
+    public abstract void jumpToPage(Page page);
 
     @Shadow
     private FlatButtonWidget applyButton;
@@ -39,19 +35,18 @@ public abstract class SodiumOptionsGUIMixin extends Screen implements ScreenProc
     @Shadow
     private FlatButtonWidget undoButton;
     @Unique private final SodiumGuiScreenProcessor controlify$screenProcessor
-            = new SodiumGuiScreenProcessor((SodiumOptionsGUI) (Object) this, this);
+            = new SodiumGuiScreenProcessor(this, this);
 
     protected SodiumOptionsGUIMixin(Component title) {
         super(title);
     }
 
-    @Inject(method = "rebuildGUIOptions", at = @At("RETURN"))
-    private void focusFirstButton(CallbackInfo ci) {
-        this.setInitialFocus(controls.get(0));
-    }
-
-    @Inject(method = "rebuildGUI", at = @At("RETURN"))
-    private void notifyScreenProcessorOfRebuild(CallbackInfo ci) {
+    @Inject(method = "rebuild", at = @At("RETURN"))
+    private void afterRebuild(CallbackInfo ci) {
+        List<ControlElement> controls = this.optionList.getControls();
+        if (!controls.isEmpty()) {
+            this.setInitialFocus(controls.get(0));
+        }
         controlify$screenProcessor.onRebuildGUI();
     }
 
@@ -62,16 +57,42 @@ public abstract class SodiumOptionsGUIMixin extends Screen implements ScreenProc
 
     @Override
     public void controlify$nextPage() {
-        var currentIndex = pages.indexOf(currentPage);
-        var nextIndex = (currentIndex + 1) % pages.size();
-        setPage(pages.get(nextIndex));
+        controlify$changePage(1);
     }
 
     @Override
     public void controlify$prevPage() {
-        var currentIndex = pages.indexOf(currentPage);
-        var nextIndex = (currentIndex - 1 + pages.size()) % pages.size();
-        setPage(pages.get(nextIndex));
+        controlify$changePage(-1);
+    }
+
+    @Unique
+    private void controlify$changePage(int offset) {
+        var accessor = (OptionListWidgetAccessor) this.optionList;
+        var sections = accessor.controlify$getPageToSectionInfo();
+        if (sections.isEmpty()) {
+            return;
+        }
+
+        List<Page> pages = sections.reference2ReferenceEntrySet()
+                .stream()
+                .sorted(Comparator.comparingInt(entry -> ((OptionListWidgetSectionAccessor) entry.getValue()).controlify$scrollJumpTarget()))
+                .map(entry -> entry.getKey())
+                .toList();
+
+        var currentSection = accessor.controlify$getLastFocusedSection();
+        int currentIndex = 0;
+        if (currentSection != null) {
+            for (int i = 0; i < pages.size(); i++) {
+                var section = sections.get(pages.get(i));
+                if (section == currentSection || section.equals(currentSection)) {
+                    currentIndex = i;
+                    break;
+                }
+            }
+        }
+
+        int nextIndex = Math.floorMod(currentIndex + offset, pages.size());
+        this.jumpToPage(pages.get(nextIndex));
     }
 
     @Override
@@ -89,4 +110,4 @@ public abstract class SodiumOptionsGUIMixin extends Screen implements ScreenProc
         return undoButton;
     }
 }
-*//*?}*/
+/*?}*/

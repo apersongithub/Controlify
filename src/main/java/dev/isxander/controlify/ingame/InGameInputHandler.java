@@ -198,7 +198,7 @@ public class InGameInputHandler {
                     this.minecraft.gameDirectory,
                     this.minecraft.getMainRenderTarget(),
                     component -> this.minecraft.execute(() -> {
-                        this.minecraft.gui.getChat().addMessage(component);
+                        this.minecraft.gui.getChat().addClientSystemMessage(component);
 
                         // TODO: this currently does not work, yet to debug why not
                         SteamDeckDriver.getDeck().ifPresent(deck -> {

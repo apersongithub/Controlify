@@ -1,5 +1,6 @@
 package dev.isxander.controlify
 
+import dev.kikugie.stonecutter.build.config.ReplacementContainer
 import net.fabricmc.loom.task.prod.ClientProductionRunTask
 
 plugins {
@@ -12,6 +13,7 @@ plugins {
 
 modstitch.apply {
     minecraftVersion = mcVersion
+    javaVersion = 25
 
     parchment {
         propMap("parchment.version") { mappingsVersion = it }
@@ -29,7 +31,6 @@ modstitch.apply {
         modAuthor = "isXander"
         prop("modDescription") { modDescription = it }
 
-        prop("packFormat") { replacementProperties.put("pack_format", it) }
         prop("githubProject") { replacementProperties.put("github", it) }
         prop("meta.mcDep") { replacementProperties.put("mc", it) }
         prop("meta.loaderDep") { replacementProperties.put("loaderVersion", it) }
@@ -51,7 +52,6 @@ modstitch.apply {
 
     moddevgradle {
         propMap("deps.neoForge") { neoForgeVersion = it }
-        propMap("deps.forge") { forgeVersion = it }
 
         defaultRuns()
     }
@@ -63,6 +63,12 @@ repositories {
     }
     strictMaven("https://maven.quiltmc.org/repository/release") {
         includeGroupAndSubgroups("org.quiltmc")
+    }
+    strictMaven("https://maven.nucleoid.xyz/releases") {
+        includeGroupAndSubgroups("eu.pb4")
+    }
+    strictMaven("https://maven.caffeinemc.net/releases") {
+        includeGroupAndSubgroups("net.caffeinemc")
     }
     maven("https://maven.isxander.dev/releases")
 }
@@ -114,24 +120,10 @@ stonecutter.apply {
         put("simple_voice_chat", isPropDefined("deps.simpleVoiceChat"))
         put("reeses_sodium_options", isPropDefined("deps.reesesSodiumOptions"))
         put("fancy_menu", isPropDefined("deps.fancyMenu"))
-
-        put("unobf", eval(current.version, ">=26"))
-        put("intermediary_lambdas", !eval(current.version, ">=26") && !modstitch.isModDevGradle)
     }
 
     dependencies {
         put("fapi", prop("deps.fabricApi") ?: "0.0.0")
-    }
-
-    replacements {
-        string {
-            direction = eval(current.version, ">=1.21.11")
-            replace("ResourceLocation", "Identifier")
-        }
-        string {
-            direction = eval(current.version, ">=1.21.11")
-            replace("import net.minecraft.Util;", "import net.minecraft.util.Util;")
-        }
     }
 }
 

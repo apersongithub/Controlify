@@ -82,7 +82,7 @@ public class EditBoxComponentProcessor implements ComponentProcessor {
         @Override
         public boolean acceptChar(char ch, int modifiers) {
             //? if >=1.21.9 {
-            this.editBox.charTyped(new net.minecraft.client.input.CharacterEvent(ch, modifiers));
+            this.editBox.charTyped(new net.minecraft.client.input.CharacterEvent(ch));
             //?} else {
             /*this.editBox.charTyped(ch, modifiers);
             *///?}

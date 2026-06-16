@@ -17,9 +17,6 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(ChatComponent.class)
 public abstract class ChatComponentMixin {
     @Shadow
-    public abstract double getScale();
-
-    @Shadow
     @Final
     private Minecraft minecraft;
 
@@ -29,7 +26,7 @@ public abstract class ChatComponentMixin {
     // in >=1.21.11, there render method is overloaded
     @Unique private static final String RENDER_METHOD =
             //? if >=1.21.11 {
-            "render(Lnet/minecraft/client/gui/components/ChatComponent$ChatGraphicsAccess;IIZ)V";
+            "extractRenderState(Lnet/minecraft/client/gui/components/ChatComponent$ChatGraphicsAccess;IILnet/minecraft/client/gui/components/ChatComponent$DisplayMode;)V";
             //?} else {
             /*"render";
             *///?}

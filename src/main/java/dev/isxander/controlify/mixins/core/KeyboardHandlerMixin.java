@@ -7,8 +7,10 @@ import dev.isxander.controlify.Controlify;
 import dev.isxander.controlify.InputMode;
 import net.minecraft.client.KeyboardHandler;
 import net.minecraft.client.Minecraft;
-import org.lwjgl.glfw.GLFWCharModsCallbackI;
+import org.lwjgl.glfw.GLFWCharCallbackI;
+import org.lwjgl.glfw.GLFWIMEStatusCallbackI;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
+import org.lwjgl.glfw.GLFWPreeditCallbackI;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -24,7 +26,7 @@ public class KeyboardHandlerMixin {
             at = @At(
                     value = "INVOKE",
                     //? if >=1.21.9 {
-                    target = "Lcom/mojang/blaze3d/platform/InputConstants;setupKeyboardCallbacks(Lcom/mojang/blaze3d/platform/Window;Lorg/lwjgl/glfw/GLFWKeyCallbackI;Lorg/lwjgl/glfw/GLFWCharModsCallbackI;)V"
+                    target = "Lcom/mojang/blaze3d/platform/InputConstants;setupKeyboardCallbacks(Lcom/mojang/blaze3d/platform/Window;Lorg/lwjgl/glfw/GLFWKeyCallbackI;Lorg/lwjgl/glfw/GLFWCharCallbackI;Lorg/lwjgl/glfw/GLFWPreeditCallbackI;Lorg/lwjgl/glfw/GLFWIMEStatusCallbackI;)V"
                     //?} else {
                     /*target = "Lcom/mojang/blaze3d/platform/InputConstants;setupKeyboardCallbacks(JLorg/lwjgl/glfw/GLFWKeyCallbackI;Lorg/lwjgl/glfw/GLFWCharModsCallbackI;)V"
                     *///?}
@@ -33,7 +35,9 @@ public class KeyboardHandlerMixin {
     private void wrapKeyboardEvents(
             /*? if >=1.21.9 {*/ Window /*?} else {*/ /*long *//*?}*/ window,
             GLFWKeyCallbackI keyCallback,
-            GLFWCharModsCallbackI charCallback,
+            GLFWCharCallbackI charCallback,
+            GLFWPreeditCallbackI preeditCallback,
+            GLFWIMEStatusCallbackI imeStatusCallback,
             Operation<Void> original
     ) {
         original.call(
@@ -42,10 +46,12 @@ public class KeyboardHandlerMixin {
                     onKeyboardInput();
                     keyCallback.invoke(w, k, s, a, m);
                 },
-                (GLFWCharModsCallbackI) (w, c, m) -> {
+                (GLFWCharCallbackI) (w, c) -> {
                     onKeyboardInput();
-                    charCallback.invoke(w, c, m);
-                }
+                    charCallback.invoke(w, c);
+                },
+                preeditCallback,
+                imeStatusCallback
         );
     }
 

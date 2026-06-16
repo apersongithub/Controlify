@@ -14,22 +14,22 @@ public abstract class MinecraftMixin implements PickBlockAccessor {
     private boolean useNbtPick;
 
     @Shadow
-    protected abstract void pickBlock();
+    protected abstract void pickBlockOrEntity();
 
     @Override
     public void controlify$pickBlock() {
         useNbtPick = false;
-        pickBlock();
+        pickBlockOrEntity();
     }
 
     @Override
     public void controlify$pickBlockWithNbt() {
         useNbtPick = true;
-        pickBlock();
+        pickBlockOrEntity();
     }
 
     @ModifyExpressionValue(
-            method = "pickBlock",
+            method = "pickBlockOrEntity",
             at = @At(
                     value = "INVOKE",
                     //? if >=1.21.9 {

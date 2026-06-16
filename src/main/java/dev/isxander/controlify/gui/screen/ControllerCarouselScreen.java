@@ -24,7 +24,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ComponentPath;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.Tooltip;
@@ -177,8 +177,8 @@ public class ControllerCarouselScreen extends Screen implements ScreenController
     }
 
     @Override
-    public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-        super.render(graphics, mouseX, mouseY, delta);
+    public void extractRenderState(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float delta) {
+        super.extractRenderState(graphics, mouseX, mouseY, delta);
 
         Blit.tex(
                 graphics,
@@ -190,13 +190,13 @@ public class ControllerCarouselScreen extends Screen implements ScreenController
         );
 
         if (carouselEntries.isEmpty()) {
-            graphics.drawCenteredString(font, Component.translatable("controlify.gui.carousel.no_controllers"), this.width / 2, (this.height - 36) / 2 - 10, 0xFFAAAAAA);
+            graphics.centeredText(font, Component.translatable("controlify.gui.carousel.no_controllers"), this.width / 2, (this.height - 36) / 2 - 10, 0xFFAAAAAA);
         }
     }
 
     @Override
-    public void renderBackground(GuiGraphics graphics, int i, int j, float f) {
-        super.renderBackground(graphics, i, j, f);
+    public void extractBackground(GuiGraphicsExtractor graphics, int i, int j, float f) {
+        super.extractBackground(graphics, i, j, f);
 
         Blit.tex(
                 graphics,
@@ -282,11 +282,11 @@ public class ControllerCarouselScreen extends Screen implements ScreenController
         protected abstract boolean isCurrentlyUsed();
         protected abstract void onUseButtonPressed();
 
-        protected void doExtraRendering(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+        protected void doExtraRendering(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float delta) {
         }
 
         @Override
-        public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+        public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float delta) {
             hovered = isMouseOver(mouseX, mouseY);
 
             boolean hasNickname = getNickname().isPresent();
@@ -298,15 +298,15 @@ public class ControllerCarouselScreen extends Screen implements ScreenController
 
             //graphics.blit(CreateWorldScreen.LIGHT_DIRT_BACKGROUND, x, y, 0, 0f, 0f, width, height, 32, 32);
 
-            graphics./*? if >=1.21.9 && <1.21.11 {*//*submitOutline*//*?} else {*/renderOutline/*?}*/(x, y, width, height, 0x5AFFFFFF);
-            useButton.render(graphics, mouseX, mouseY, delta);
+            graphics./*? if >=1.21.9 && <1.21.11 {*//*submitOutline*//*?} else {*/outline/*?}*/(x, y, width, height, 0x5AFFFFFF);
+            useButton.extractRenderState(graphics, mouseX, mouseY, delta);
             if (this.hasSettingsButton()) {
-                settingsButton.render(graphics, mouseX, mouseY, delta);
+                settingsButton.extractRenderState(graphics, mouseX, mouseY, delta);
             }
 
-            graphics.drawCenteredString(font, this.getName(), x + width / 2, y + height - 26 - font.lineHeight - (hasNickname ? font.lineHeight + 1 : 0), 0xFFFFFFFF);
+            graphics.centeredText(font, this.getName(), x + width / 2, y + height - 26 - font.lineHeight - (hasNickname ? font.lineHeight + 1 : 0), 0xFFFFFFFF);
             this.getNickname().ifPresent(nickname -> {
-                graphics.drawCenteredString(font, nickname, x + width / 2, y + height - 26 - font.lineHeight, 0xFFAAAAAA);
+                graphics.centeredText(font, nickname, x + width / 2, y + height - 26 - font.lineHeight, 0xFFAAAAAA);
             });
 
             Component currentlyInUseText = Component.translatable("controlify.gui.carousel.entry.in_use").withStyle(ChatFormatting.GREEN);
@@ -315,7 +315,7 @@ public class ControllerCarouselScreen extends Screen implements ScreenController
 
             if (currentlyUsedPos > 0) {
                 ClientUtils.drawSprite(graphics, CHECKMARK, x + 4, y + 4, 9, 8);
-                graphics.drawString(font, currentlyInUseText, x + 17, y + 4, -1);
+                graphics.text(font, currentlyInUseText, x + 17, y + 4, -1);
             }
             this.doExtraRendering(graphics, mouseX, mouseY, delta);
 
@@ -523,10 +523,10 @@ public class ControllerCarouselScreen extends Screen implements ScreenController
         }
 
         @Override
-        protected void doExtraRendering(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+        protected void doExtraRendering(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float delta) {
             if (badSteamDeck) {
                 ClientUtils.drawSprite(graphics, DANGER, this.getX() + 4, this.getY() + 4 + 10, 9, 8);
-                graphics.drawString(font, Component.translatable("controlify.steam_deck.no_driver"), this.getX() + 17, this.getY() + 4 + 10, -1);
+                graphics.text(font, Component.translatable("controlify.steam_deck.no_driver"), this.getX() + 17, this.getY() + 4 + 10, -1);
             }
         }
     }

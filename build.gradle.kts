@@ -6,7 +6,6 @@ plugins {
 
     id("me.modmuss50.mod-publish-plugin")
     `maven-publish`
-    id("com.gradleup.nmcp")
 
     id("dev.kikugie.postprocess.j52j") version "2.1-beta.3"
 }
@@ -32,6 +31,7 @@ modstitch {
         if (isPropDefined("deps.reesesSodiumOptions")) configs.register("controlify-compat.reeses-sodium-options")
         configs.register("controlify-compat.yacl")
         if (isPropDefined("deps.simpleVoiceChat")) configs.register("controlify-compat.simple-voice-chat")
+        configs.register("controlify-compat.rrls")
         if (modstitch.isLoom) configs.register("controlify-platform.fabric")
         if (modstitch.isModDevGradleRegular) configs.register("controlify-platform.neoforge")
     }
@@ -40,14 +40,6 @@ modstitch {
 dependencies {
     fun Dependency?.jij() = this?.also(::modstitchJiJ)
     fun Dependency?.productionMod() = this?.also { "productionMods"(it) }
-
-    propMap("deps.mixinExtras") {
-        when {
-            modstitch.isLoom -> modstitchImplementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:$it")!!).jij()
-            modstitch.isModDevGradleRegular -> implementation("io.github.llamalad7:mixinextras-neoforge:$it").jij()
-            else -> error("Unknown loader")
-        }
-    }
 
     fun modDependency(
         id: String,
@@ -101,8 +93,21 @@ dependencies {
     // Already included by YetAnotherConfigLib, but we need it too, so let's define explicit dep
     api("org.quiltmc.parsers:json:${property("deps.quiltparsers")}")
 
+    if (stonecutter.current.parsed < "1.21.11") {
+        compileOnly("org.jspecify:jspecify:1.0.0")
+    }
+
     // sodium compat
-    modDependency("sodium", { "maven.modrinth:sodium:$it" })
+    when {
+        modstitch.isLoom -> {
+            modDependency("sodium", { "net.caffeinemc:sodium-fabric:$it" })
+        }
+        modstitch.isModDevGradle -> {
+            modDependency("sodium", { "net.caffeinemc:sodium-neoforge:$it" })
+            modDependency("sodium", { "net.caffeinemc:sodium-neoforge-mod:$it" })
+        }
+    }
+
     // RSO compat
     modDependency("reesesSodiumOptions", { "maven.modrinth:reeses-sodium-options:$it" })
     // iris compat

@@ -15,7 +15,7 @@ import dev.isxander.controlify.virtualmouse.VirtualMouseBehaviour;
 import dev.isxander.controlify.virtualmouse.VirtualMouseHandler;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.Slot;
 
 import java.util.List;
@@ -65,22 +65,22 @@ public class AbstractContainerScreenProcessor<T extends AbstractContainerScreen<
             }
 
             if (ControlifyBindings.INV_SELECT.on(controller).justPressed()) {
-                clickSlotFunction.clickSlot(hoveredSlot, hoveredSlot.index, 0, ClickType.PICKUP);
+                clickSlotFunction.clickSlot(hoveredSlot, hoveredSlot.index, 0, ContainerInput.PICKUP);
                 hapticNavigate();
             }
 
             if (ControlifyBindings.INV_QUICK_MOVE.on(controller).justPressed()) {
-                clickSlotFunction.clickSlot(hoveredSlot, hoveredSlot.index, 0, ClickType.QUICK_MOVE);
+                clickSlotFunction.clickSlot(hoveredSlot, hoveredSlot.index, 0, ContainerInput.QUICK_MOVE);
                 hapticNavigate();
             }
 
             if (ControlifyBindings.INV_TAKE_HALF.on(controller).justPressed()) {
-                clickSlotFunction.clickSlot(hoveredSlot, hoveredSlot.index, 1, ClickType.PICKUP);
+                clickSlotFunction.clickSlot(hoveredSlot, hoveredSlot.index, 1, ContainerInput.PICKUP);
                 hapticNavigate();
             }
 
 //            if (ControlifyBindings.SWAP_HANDS.on(controller).justPressed()) {
-//                clickSlotFunction.clickSlot(hoveredSlot, hoveredSlot.index, 40, ClickType.SWAP);
+//                clickSlotFunction.clickSlot(hoveredSlot, hoveredSlot.index, 40, ContainerInput.SWAP);
 //                hapticNavigate();
 //            }
         } else {
@@ -89,7 +89,7 @@ public class AbstractContainerScreenProcessor<T extends AbstractContainerScreen<
 
         if (!screen.getMenu().getCarried().isEmpty()) {
             if (ControlifyBindings.DROP_INVENTORY.on(controller).justPressed()) {
-                clickSlotFunction.clickSlot(null, -999, 0, ClickType.PICKUP);
+                clickSlotFunction.clickSlot(null, -999, 0, ContainerInput.PICKUP);
                 hapticNavigate();
             }
         }
@@ -138,6 +138,6 @@ public class AbstractContainerScreenProcessor<T extends AbstractContainerScreen<
 
     @FunctionalInterface
     public interface ClickSlotFunction {
-        void clickSlot(Slot slot, int slotId, int button, ClickType clickType);
+        void clickSlot(Slot slot, int slotId, int button, ContainerInput clickType);
     }
 }

@@ -31,17 +31,17 @@ public class FAPIApiCreativeTabHelper implements CreativeTabHelper {
 
     @Override
     public List<CreativeModeTab> getTabsForPage(int page) {
-        return screen.getItemGroupsOnPage(page);
+        return screen.getTabsOnPage(page);
     }
 
     @Override
     public CreativeModeTab getSelectedTab() {
-        return screen.getSelectedItemGroup();
+        return screen.getSelectedTab();
     }
 
     @Override
     public void setSelectedTab(CreativeModeTab tab) {
-        screen.setSelectedItemGroup(tab);
+        screen.setSelectedTab(tab);
     }
 }
 //?}

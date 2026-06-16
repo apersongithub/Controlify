@@ -8,7 +8,7 @@ import dev.isxander.controlify.screenop.ScreenProcessorProvider;
 import dev.isxander.controlify.utils.render.CGuiPose;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.utils.Dimension;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -34,7 +34,7 @@ public class BindConsumerScreen extends Screen implements ScreenProcessorProvide
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
+    public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float tickDelta) {
         Dimension<Integer> dim = widgetToFocus.getDimension();
 
         var pose = CGuiPose.ofPush(guiGraphics);
@@ -42,7 +42,7 @@ public class BindConsumerScreen extends Screen implements ScreenProcessorProvide
         //? if <1.21.6
         /*guiGraphics.pose().translate(0, 0, -20);*/
 
-        backgroundScreen.render(guiGraphics, dim.centerX(), dim.centerY(), tickDelta);
+        backgroundScreen.extractRenderState(guiGraphics, dim.centerX(), dim.centerY(), tickDelta);
 
         pose.pop();
 
@@ -57,11 +57,11 @@ public class BindConsumerScreen extends Screen implements ScreenProcessorProvide
 
         pose.pop();
 
-        super.render(guiGraphics, mouseX, mouseY, tickDelta);
+        super.extractRenderState(guiGraphics, mouseX, mouseY, tickDelta);
     }
 
     @Override
-    public void renderBackground(GuiGraphics guiGraphics, int i, int j, float f) {
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int i, int j, float f) {
         // do not render background
     }
 

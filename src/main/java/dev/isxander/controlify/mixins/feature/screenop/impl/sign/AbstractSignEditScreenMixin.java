@@ -1,7 +1,5 @@
 package dev.isxander.controlify.mixins.feature.screenop.impl.sign;
 
-import com.llamalad7.mixinextras.expression.Definition;
-import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -16,7 +14,7 @@ import dev.isxander.controlify.screenop.keyboard.KeyboardLayouts;
 import dev.isxander.controlify.screenop.keyboard.KeyboardWidget;
 import dev.isxander.controlify.screenop.keyboard.MixinInputTarget;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.font.TextFieldHelper;
 import net.minecraft.client.gui.screens.Screen;
@@ -40,7 +38,9 @@ public abstract class AbstractSignEditScreenMixin extends Screen implements Scre
     @Shadow private @Nullable TextFieldHelper signField;
     @Shadow @Final private String[] messages;
     @Shadow private int line;
-    @Shadow protected abstract void onDone();
+    @Shadow
+    private void onDone() {
+    }
     @Shadow @Final protected SignBlockEntity sign;
 
     @Unique
@@ -102,11 +102,14 @@ public abstract class AbstractSignEditScreenMixin extends Screen implements Scre
     }
     *///?}
 
-    @Definition(id = "drawCenteredString", method = "Lnet/minecraft/client/gui/GuiGraphics;drawCenteredString(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;III)V")
-    @Definition(id = "title", field = "Lnet/minecraft/client/gui/screens/inventory/AbstractSignEditScreen;title:Lnet/minecraft/network/chat/Component;")
-    @Expression("?.drawCenteredString(?, this.title, ?, ?, ?)")
-    @WrapWithCondition(method = "render", at = @At("MIXINEXTRAS:EXPRESSION"))
-    private boolean preventDrawingTitle(GuiGraphics instance, Font font, Component text, int x, int y, int color) {
+    @WrapWithCondition(
+            method = "extractRenderState",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;centeredText(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;III)V"
+            )
+    )
+    private boolean preventDrawingTitle(GuiGraphicsExtractor instance, Font font, Component text, int x, int y, int color) {
         return this.keyboard == null;
     }
 
@@ -119,7 +122,7 @@ public abstract class AbstractSignEditScreenMixin extends Screen implements Scre
     public boolean controlify$acceptChar(char ch, int modifiers) {
         if (this.signField == null) return false;
         //? if >=1.21.9 {
-        return this.signField.charTyped(new net.minecraft.client.input.CharacterEvent(ch, modifiers));
+        return this.signField.charTyped(new net.minecraft.client.input.CharacterEvent(ch));
         //?} else {
         /*return this.signField.charTyped(ch);
         *///?}

@@ -9,7 +9,4 @@ This version has the following targets:
 
 ## Changes
 
-- Fix controller vibrations causing input to freeze
-- Fix being stuck sneaking if GUI_BACK matches VMOUSE_SHIFT_CLICK
-- Add debug option to specify SDL natives path explicitly
-- Update translations
+- Fix crash on slow computers when using the Remove Reloading Screen mod

@@ -34,7 +34,7 @@ public class ClientPacketListenerMixin {
     @Definition(id = "keyUp", field = "Lnet/minecraft/client/Options;keyUp:Lnet/minecraft/client/KeyMapping;")
     @Definition(id = "getTranslatedKeyMessage", method = "Lnet/minecraft/client/KeyMapping;getTranslatedKeyMessage()Lnet/minecraft/network/chat/Component;")
     @Expression("?.keyUp.getTranslatedKeyMessage()")
-    @ModifyExpressionValue(method = "handleGameEvent", at = @At("MIXINEXTRAS:EXPRESSION"))
+    @ModifyExpressionValue(method = {"handleGameEvent", "openDemoIntroScreen"}, at = @At("MIXINEXTRAS:EXPRESSION"))
     private Component useTutorialUpGlyph(Component original) {
         return BindingFontHelper.bindingWithActiveFallback(ControlifyBindings.WALK_FORWARD.bindId(), original);
     }
@@ -42,7 +42,7 @@ public class ClientPacketListenerMixin {
     @Definition(id = "keyLeft", field = "Lnet/minecraft/client/Options;keyLeft:Lnet/minecraft/client/KeyMapping;")
     @Definition(id = "getTranslatedKeyMessage", method = "Lnet/minecraft/client/KeyMapping;getTranslatedKeyMessage()Lnet/minecraft/network/chat/Component;")
     @Expression("?.keyLeft.getTranslatedKeyMessage()")
-    @ModifyExpressionValue(method = "handleGameEvent", at = @At("MIXINEXTRAS:EXPRESSION"))
+    @ModifyExpressionValue(method = {"handleGameEvent", "openDemoIntroScreen"}, at = @At("MIXINEXTRAS:EXPRESSION"))
     private Component useTutorialLeftGlyph(Component original) {
         return BindingFontHelper.bindingWithActiveFallback(ControlifyBindings.WALK_LEFT.bindId(), original);
     }
@@ -50,7 +50,7 @@ public class ClientPacketListenerMixin {
     @Definition(id = "keyDown", field = "Lnet/minecraft/client/Options;keyDown:Lnet/minecraft/client/KeyMapping;")
     @Definition(id = "getTranslatedKeyMessage", method = "Lnet/minecraft/client/KeyMapping;getTranslatedKeyMessage()Lnet/minecraft/network/chat/Component;")
     @Expression("?.keyDown.getTranslatedKeyMessage()")
-    @ModifyExpressionValue(method = "handleGameEvent", at = @At("MIXINEXTRAS:EXPRESSION"))
+    @ModifyExpressionValue(method = {"handleGameEvent", "openDemoIntroScreen"}, at = @At("MIXINEXTRAS:EXPRESSION"))
     private Component useTutorialDownGlyph(Component original) {
         return BindingFontHelper.bindingWithActiveFallback(ControlifyBindings.WALK_BACKWARD.bindId(), original);
     }
@@ -58,7 +58,7 @@ public class ClientPacketListenerMixin {
     @Definition(id = "keyRight", field = "Lnet/minecraft/client/Options;keyRight:Lnet/minecraft/client/KeyMapping;")
     @Definition(id = "getTranslatedKeyMessage", method = "Lnet/minecraft/client/KeyMapping;getTranslatedKeyMessage()Lnet/minecraft/network/chat/Component;")
     @Expression("?.keyRight.getTranslatedKeyMessage()")
-    @ModifyExpressionValue(method = "handleGameEvent", at = @At("MIXINEXTRAS:EXPRESSION"))
+    @ModifyExpressionValue(method = {"handleGameEvent", "openDemoIntroScreen"}, at = @At("MIXINEXTRAS:EXPRESSION"))
     private Component useTutorialRightGlyph(Component original) {
         return BindingFontHelper.bindingWithActiveFallback(ControlifyBindings.WALK_RIGHT.bindId(), original);
     }
@@ -66,7 +66,7 @@ public class ClientPacketListenerMixin {
     @Definition(id = "keyJump", field = "Lnet/minecraft/client/Options;keyJump:Lnet/minecraft/client/KeyMapping;")
     @Definition(id = "getTranslatedKeyMessage", method = "Lnet/minecraft/client/KeyMapping;getTranslatedKeyMessage()Lnet/minecraft/network/chat/Component;")
     @Expression("?.keyJump.getTranslatedKeyMessage()")
-    @ModifyExpressionValue(method = "handleGameEvent", at = @At("MIXINEXTRAS:EXPRESSION"))
+    @ModifyExpressionValue(method = {"handleGameEvent", "openDemoIntroScreen"}, at = @At("MIXINEXTRAS:EXPRESSION"))
     private Component useTutorialJumpGlyph(Component original) {
         return BindingFontHelper.bindingWithActiveFallback(ControlifyBindings.JUMP.bindId(), original);
     }
@@ -74,7 +74,7 @@ public class ClientPacketListenerMixin {
     @Definition(id = "keyInventory", field = "Lnet/minecraft/client/Options;keyInventory:Lnet/minecraft/client/KeyMapping;")
     @Definition(id = "getTranslatedKeyMessage", method = "Lnet/minecraft/client/KeyMapping;getTranslatedKeyMessage()Lnet/minecraft/network/chat/Component;")
     @Expression("?.keyInventory.getTranslatedKeyMessage()")
-    @ModifyExpressionValue(method = "handleGameEvent", at = @At("MIXINEXTRAS:EXPRESSION"))
+    @ModifyExpressionValue(method = {"handleGameEvent", "openDemoIntroScreen"}, at = @At("MIXINEXTRAS:EXPRESSION"))
     private Component useTutorialInventoryGlyph(Component original) {
         return BindingFontHelper.bindingWithActiveFallback(ControlifyBindings.INVENTORY.bindId(), original);
     }

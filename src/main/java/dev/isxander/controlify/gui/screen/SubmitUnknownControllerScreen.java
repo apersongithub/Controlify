@@ -10,7 +10,7 @@ import dev.isxander.controlify.platform.main.PlatformMainUtil;
 import dev.isxander.controlify.utils.ClientUtils;
 import dev.isxander.controlify.utils.CUtil;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -106,21 +106,20 @@ public class SubmitUnknownControllerScreen extends Screen implements DontInterup
         );
         this.nameField.setHint(Component.translatable("controlify.controller_submission.name_hint"));
         this.nameField.setValue(controller.name());
-        this.nameField.setFilter(s -> {
+        this.nameField.setResponder(s -> {
             invalidName = !checkValidName(s);
             submitButton.active = !invalidName;
-            return true;
         });
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-        renderBackground(graphics, mouseX, mouseY, delta);
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float delta) {
+        extractBackground(graphics, mouseX, mouseY, delta);
 
-        super.render(graphics, mouseX, mouseY, delta);
+        super.extractRenderState(graphics, mouseX, mouseY, delta);
 
         if (invalidName) {
-            graphics.drawCenteredString(font, Component.translatable("controlify.controller_submission.invalid_name").withStyle(ChatFormatting.RED), this.width / 2, nameField.getRectangle().bottom() + 4, -1);
+            graphics.centeredText(font, Component.translatable("controlify.controller_submission.invalid_name").withStyle(ChatFormatting.RED), this.width / 2, nameField.getRectangle().bottom() + 4, -1);
         }
     }
 

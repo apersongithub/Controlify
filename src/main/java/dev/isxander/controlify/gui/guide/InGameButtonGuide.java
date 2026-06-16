@@ -4,7 +4,7 @@ import dev.isxander.controlify.controller.ControllerEntity;
 import dev.isxander.controlify.api.guide.InGameCtx;
 import dev.isxander.controlify.controller.GenericControllerConfig;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 public class InGameButtonGuide {
     private final ControllerEntity controller;
@@ -15,7 +15,7 @@ public class InGameButtonGuide {
         this.minecraft = minecraft;
     }
 
-    public void renderHud(GuiGraphics graphics, float tickDelta) {
+    public void renderHud(GuiGraphicsExtractor graphics, float tickDelta) {
         boolean debugOpen = minecraft.getDebugOverlay().showDebugScreen();
         boolean hideGui = minecraft.options.hideGui;
         boolean screenOpen = minecraft.screen != null;
@@ -30,9 +30,6 @@ public class InGameButtonGuide {
         GenericControllerConfig config = controller.genericConfig().config();
 
         if (config.showIngameGuide) {
-            if (minecraft.hitResult == null) {
-                minecraft.gameRenderer.pick(1f);
-            }
             GuideDomains.IN_GAME.updateGuides(new InGameCtx(minecraft, minecraft.player, minecraft.level, minecraft.hitResult, controller, config.guideVerbosity), minecraft.font);
         }
     }

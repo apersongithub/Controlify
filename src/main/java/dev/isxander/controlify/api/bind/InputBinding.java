@@ -195,7 +195,7 @@ public interface InputBinding {
     /**
      * Equivalent to calling
      * <pre><code>
-     *     binding.digitalNow() && !binding.digitalPrev()
+     *     binding.digitalNow() &amp;&amp; !binding.digitalPrev()
      * </code></pre>
      *
      * @return true if the binding is pressed this tick and not pressed the previous tick
@@ -205,7 +205,7 @@ public interface InputBinding {
     /**
      * Equivalent to calling
      * <pre><code>
-     *     !binding.digitalNow() && binding.digitalPrev()
+     *     !binding.digitalNow() &amp;&amp; binding.digitalPrev()
      * </code></pre>
      *
      * @return true if the binding is not pressed this tick and pressed the previous tick

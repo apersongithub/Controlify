@@ -14,7 +14,7 @@ import dev.isxander.controlify.utils.ClientUtils;
 import dev.isxander.controlify.utils.ColorUtils;
 import dev.isxander.controlify.utils.render.Blit;
 import dev.isxander.controlify.utils.render.CGuiPose;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
@@ -224,12 +224,12 @@ public class ControllerMappingMakerScreen extends Screen implements ScreenContro
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int i, int j, float f) {
-        super.render(guiGraphics, i, j, f);
+    public void extractRenderState(GuiGraphicsExtractor guiGraphics, int i, int j, float f) {
+        super.extractRenderState(guiGraphics, i, j, f);
 
-        guiGraphics.drawCenteredString(font, Component.translatable("controlify.gui.mapping_maker.title"), width / 2, 15, 0xFFFFFFFF);
+        guiGraphics.centeredText(font, Component.translatable("controlify.gui.mapping_maker.title"), width / 2, 15, 0xFFFFFFFF);
 
-        guiGraphics.drawCenteredString(
+        guiGraphics.centeredText(
                 font,
                 currentStage == null ? Component.translatable("controlify.gui.mapping_maker.please_wait") : currentStage.name(),
                 width / 2, height - 20,

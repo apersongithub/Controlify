@@ -8,7 +8,7 @@ import dev.isxander.controlify.utils.HoldRepeatHelper;
 
 /**
  * A component processor that handles incrementing and decrementing a slider.
- * This uses {@link dev.isxander.controlify.bindings.ControllerBindings#CYCLE_OPT_FORWARD} and {@link dev.isxander.controlify.bindings.ControllerBindings#CYCLE_OPT_BACKWARD} to increment and decrement the slider.
+ * This uses {@link ControlifyBindings#CYCLE_OPT_FORWARD} and {@link ControlifyBindings#CYCLE_OPT_BACKWARD} to increment and decrement the slider.
  */
 public abstract class AbstractSliderComponentProcessor implements ComponentProcessor {
     private final HoldRepeatHelper holdRepeatHelper = new HoldRepeatHelper(15, 3);

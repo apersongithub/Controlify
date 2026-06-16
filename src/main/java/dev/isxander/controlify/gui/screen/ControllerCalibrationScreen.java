@@ -10,7 +10,7 @@ import dev.isxander.controlify.controllermanager.ControllerManager;
 import dev.isxander.controlify.utils.ClientUtils;
 import dev.isxander.controlify.utils.render.CGuiPose;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.MultiLineLabel;
 import net.minecraft.client.gui.components.Tooltip;
@@ -96,10 +96,10 @@ public class ControllerCalibrationScreen extends Screen implements DontInteruptS
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-        super.render(graphics, mouseX, mouseY, delta);
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float delta) {
+        super.extractRenderState(graphics, mouseX, mouseY, delta);
 
-        graphics.drawCenteredString(font, Component.translatable("controlify.calibration.title", controller.name()).withStyle(ChatFormatting.BOLD), width / 2, 8, -1);
+        graphics.centeredText(font, Component.translatable("controlify.calibration.title", controller.name()).withStyle(ChatFormatting.BOLD), width / 2, 8, -1);
 
         var pose = CGuiPose.ofPush(graphics);
         pose.scale(2f, 2f);

@@ -5,7 +5,6 @@
   "mixinextras": {
     "minVersion": "0.5.0-beta.4"
   },
-  "minMixinExtrasVersion": "0.5.0-beta.4",
   "injectors": {
     "defaultRequire": 1
   },
@@ -19,6 +18,8 @@
     "CycleControlElementMixin",
     "FlatButtonWidgetAccessor",
     "FlatButtonWidgetMixin",
+    "OptionListWidgetAccessor",
+    "OptionListWidgetSectionAccessor",
     "SliderControlElementMixin",
     "TickBoxControlElementMixin"
   ]
