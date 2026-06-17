@@ -9,8 +9,11 @@
   "injectors": {
     "defaultRequire": 1
   },
+  "overwrites": {
+    "requireAnnotations": true
+  },
   "plugin": "dev.isxander.controlify.compatibility.rso.RSOMixinPlugin",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_25",
   "client": [
     "SodiumVideoOptionsScreenMixin"
   ],

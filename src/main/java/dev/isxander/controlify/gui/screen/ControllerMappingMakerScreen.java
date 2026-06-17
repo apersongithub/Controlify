@@ -208,7 +208,7 @@ public class ControllerMappingMakerScreen extends Screen implements ScreenContro
 
     @Override
     public void onClose() {
-        minecraft.setScreen(lastScreen);
+        dev.isxander.controlify.utils.MinecraftUtil.setScreen(lastScreen);
         inputComponent.confObj().mapping = mappingBuilder.build();
         Controlify.instance().config().save();
     }

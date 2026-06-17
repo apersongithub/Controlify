@@ -16,7 +16,7 @@ public class BluetoothWarningScreen extends ConfirmScreen {
                 Controlify.instance().config().save();
             }
 
-            Minecraft.getInstance().setScreen(nextScreen);
+            dev.isxander.controlify.utils.MinecraftUtil.setScreen(nextScreen);
         },
                 Component.translatable("controlify.bluetooth_warning.title"),
                 Component.translatable("controlify.bluetooth_warning.desc"),

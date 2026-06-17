@@ -9,7 +9,10 @@
   "injectors": {
     "defaultRequire": 1
   },
-  "compatibilityLevel": "JAVA_21",
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "compatibilityLevel": "JAVA_25",
   "client": [
     "CreativeModeInventoryScreenAccessor",
     "OptionsMixin"

@@ -35,14 +35,14 @@ public abstract class ChatComponentMixin {
     @Expression("floor((float) (@(?) - 40) / ?)")
     @ModifyExpressionValue(method = RENDER_METHOD, at = @At("MIXINEXTRAS:EXPRESSION"))
     private int modifyChatOffset(int y) {
-        if (minecraft.screen instanceof ChatScreen chat)
+        if (dev.isxander.controlify.utils.MinecraftUtil.getScreen() instanceof ChatScreen chat)
             return (int) (y * (1 - ChatKeyboardDucky.getKeyboardShiftAmount(chat)));
         return y;
     }
 
     @ModifyExpressionValue(method = RENDER_METHOD, at = @At(value = "CONSTANT", args = "intValue=" + VANILLA_CHAT_PADDING))
     private int modifyChatToInputPadding(int padding) {
-        if (minecraft.screen instanceof ChatScreen chat) {
+        if (dev.isxander.controlify.utils.MinecraftUtil.getScreen() instanceof ChatScreen chat) {
             if (ChatKeyboardDucky.getKeyboardShiftAmount(chat) > 0) {
                 return SHIFTED_CHAT_PADDING;
             }
@@ -55,7 +55,7 @@ public abstract class ChatComponentMixin {
     //? if <1.21.11 {
     /*@ModifyVariable(method = "screenToChatY", at = @At("HEAD"), argsOnly = true)
     private double modifyScreenY(double y) {
-        if (minecraft.screen instanceof ChatScreen chat) {
+        if (dev.isxander.controlify.utils.MinecraftUtil.getScreen() instanceof ChatScreen chat) {
             float shiftAmount = ChatKeyboardDucky.getKeyboardShiftAmount(chat);
             if (shiftAmount > 0) {
                 double shiftPixels = shiftAmount * minecraft.getWindow().getGuiScaledHeight() - (VANILLA_CHAT_PADDING - SHIFTED_CHAT_PADDING);

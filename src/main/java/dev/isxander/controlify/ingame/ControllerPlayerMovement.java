@@ -32,7 +32,7 @@ public class ControllerPlayerMovement extends /*? if >=1.21.2 {*/ ClientInput /*
     //?} else {
     /*public void tick(boolean slowDown, float movementMultiplier) {
     *///?}
-        if (Minecraft.getInstance().screen != null || player == null) {
+        if (dev.isxander.controlify.utils.MinecraftUtil.getScreen() != null || player == null) {
             this.setMoveVec(0, 0);
 
             //? if >=1.21.2 {

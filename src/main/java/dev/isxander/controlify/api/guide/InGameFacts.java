@@ -58,7 +58,7 @@ public final class InGameFacts {
     public static final Fact<InGameCtx> CAN_ELYTRA_FLY = register(
             CUtil.rl("can_elytra_fly"),
             //? if >=1.21.2 {
-            ctx -> ((PlayerAccessor) ctx.player()).callCanGlide()
+            ctx -> ((PlayerAccessor) ctx.player()).controlify$callCanGlide()
                     && !ctx.player().onClimbable()
                     && !ctx.player().onGround()
                     && !ctx.player().isInLiquid()

@@ -24,7 +24,7 @@ public class CommandSuggestionsMixin implements ChatScreenProcessor.CmdSuggestio
 
     @ModifyExpressionValue(method = {"renderUsage", "showSuggestions"}, at = @At(value = "FIELD", target = "Lnet/minecraft/client/gui/screens/Screen;height:I"))
     private int modifyUsageHeight(int height) {
-        if (minecraft.screen instanceof ChatScreen chat)
+        if (dev.isxander.controlify.utils.MinecraftUtil.getScreen() instanceof ChatScreen chat)
             return (int) (height * (1 - ChatKeyboardDucky.getKeyboardShiftAmount(chat)));
         return height;
     }

@@ -150,7 +150,7 @@ public final class BasicRumbleEffect implements RumbleEffect {
     }
 
     public static BooleanSupplier finishOnScreenChange() {
-        Screen screen = Minecraft.getInstance().screen;
-        return () -> screen != Minecraft.getInstance().screen;
+        Screen screen = dev.isxander.controlify.utils.MinecraftUtil.getScreen();
+        return () -> screen != dev.isxander.controlify.utils.MinecraftUtil.getScreen();
     }
 }

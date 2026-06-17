@@ -9,20 +9,20 @@ import java.util.List;
 
 @Mixin(RecipeBookPage.class)
 public interface RecipeBookPageAccessor {
-    @Accessor
-    List<RecipeButton> getButtons();
+    @Accessor("buttons")
+    List<RecipeButton> controlify$getButtons();
 
     //? if >=1.21.11 {
-    @Accessor
-    net.minecraft.client.gui.components.ImageButton getForwardButton();
+    @Accessor("forwardButton")
+    net.minecraft.client.gui.components.ImageButton controlify$getForwardButton();
 
-    @Accessor
-    net.minecraft.client.gui.components.ImageButton getBackButton();
+    @Accessor("backButton")
+    net.minecraft.client.gui.components.ImageButton controlify$getBackButton();
     //?} else {
     /*@Accessor
-    net.minecraft.client.gui.components.StateSwitchingButton getForwardButton();
+    net.minecraft.client.gui.components.StateSwitchingButton controlify$getForwardButton();
 
     @Accessor
-    net.minecraft.client.gui.components.StateSwitchingButton getBackButton();
+    net.minecraft.client.gui.components.StateSwitchingButton controlify$getBackButton();
     *///?}
 }

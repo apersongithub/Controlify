@@ -3,6 +3,8 @@ package dev.isxander.controlify.gui.guide;
 import dev.isxander.controlify.controller.ControllerEntity;
 import dev.isxander.controlify.api.guide.InGameCtx;
 import dev.isxander.controlify.controller.GenericControllerConfig;
+import dev.isxander.controlify.mixins.feature.guide.ingame.MinecraftAccessor;
+import dev.isxander.controlify.utils.MinecraftUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 
@@ -15,14 +17,18 @@ public class InGameButtonGuide {
         this.minecraft = minecraft;
     }
 
-    public void renderHud(GuiGraphicsExtractor graphics, float tickDelta) {
+    public void extractRenderState(GuiGraphicsExtractor graphics, float tickDelta) {
         boolean debugOpen = minecraft.getDebugOverlay().showDebugScreen();
-        boolean hideGui = minecraft.options.hideGui;
-        boolean screenOpen = minecraft.screen != null;
+        //? if >=26.2 {
+        boolean hideGui = minecraft.gui.hud.isHidden();
+        //?} else {
+        /*boolean hideGui = minecraft.options.hideGui;
+        *///?}
+        boolean screenOpen = MinecraftUtil.getScreen() != null;
         GenericControllerConfig config = controller.genericConfig().config();
 
         if (!debugOpen && !hideGui && !screenOpen && config.showIngameGuide) {
-            GuideRenderer.render(graphics, GuideDomains.IN_GAME, minecraft, config.ingameGuideBottom, true);
+            GuideRenderer.extractRenderState(graphics, GuideDomains.IN_GAME, minecraft, config.ingameGuideBottom, true);
         }
     }
 
@@ -30,6 +36,9 @@ public class InGameButtonGuide {
         GenericControllerConfig config = controller.genericConfig().config();
 
         if (config.showIngameGuide) {
+            if (minecraft.hitResult == null) {
+                ((MinecraftAccessor) minecraft).controlify$invokePick(1f);
+            }
             GuideDomains.IN_GAME.updateGuides(new InGameCtx(minecraft, minecraft.player, minecraft.level, minecraft.hitResult, controller, config.guideVerbosity), minecraft.font);
         }
     }

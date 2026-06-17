@@ -27,7 +27,7 @@ public class PauseScreenProcessor extends ScreenProcessor<PauseScreen> {
         super.handleButtons(controller);
 
         if (ControlifyBindings.GUI_ABSTRACT_ACTION_1.on(controller).justPressed()) {
-            minecraft.setScreen(new OptionsScreen(screen, minecraft.options, true));
+            dev.isxander.controlify.utils.MinecraftUtil.setScreen(new OptionsScreen(screen, minecraft.options, true));
         }
         if (ControlifyBindings.GUI_ABSTRACT_ACTION_2.on(controller).justPressed()) {
             screen.setFocused(disconnectButtonSupplier.get());
@@ -38,7 +38,7 @@ public class PauseScreenProcessor extends ScreenProcessor<PauseScreen> {
     public void onWidgetRebuild() {
         super.onWidgetRebuild();
 
-        if (((PauseScreenAccessor) screen).getShowPauseMenu()) {
+        if (((PauseScreenAccessor) screen).controlify$getShowPauseMenu()) {
             getWidget("menu.returnToGame").ifPresent(widget -> {
                 ButtonGuideApi.addGuideToButton(
                         (AbstractButton) widget,

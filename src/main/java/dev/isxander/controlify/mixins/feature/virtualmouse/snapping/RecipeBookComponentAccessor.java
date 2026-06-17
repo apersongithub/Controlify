@@ -10,20 +10,20 @@ import java.util.List;
 
 @Mixin(RecipeBookComponent.class)
 public interface RecipeBookComponentAccessor {
-    @Accessor
-    RecipeBookPage getRecipeBookPage();
+    @Accessor("recipeBookPage")
+    RecipeBookPage controlify$getRecipeBookPage();
 
-    @Accessor
-    List<RecipeBookTabButton> getTabButtons();
+    @Accessor("tabButtons")
+    List<RecipeBookTabButton> controlify$getTabButtons();
 
-    @Accessor
-    RecipeBookTabButton getSelectedTab();
+    @Accessor("selectedTab")
+    RecipeBookTabButton controlify$getSelectedTab();
 
-    @Accessor
+    @Accessor("filterButton")
     //? if >=1.21.11 {
     net.minecraft.client.gui.components.CycleButton<?>
     //?} else {
     /*net.minecraft.client.gui.components.StateSwitchingButton
     *///?}
-    getFilterButton();
+    controlify$getFilterButton();
 }

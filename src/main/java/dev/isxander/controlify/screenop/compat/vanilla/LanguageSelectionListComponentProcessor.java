@@ -26,7 +26,7 @@ public class LanguageSelectionListComponentProcessor implements ComponentProcess
                 minecraft.options.save();
             }
 
-            minecraft.setScreen(((OptionsSubScreenAccessor) screen.screen).getLastScreen());
+            dev.isxander.controlify.utils.MinecraftUtil.setScreen(((OptionsSubScreenAccessor) screen.screen).controlify$getLastScreen());
 
             return true;
         }

@@ -8,8 +8,11 @@
   "injectors": {
     "defaultRequire": 1
   },
+  "overwrites": {
+    "requireAnnotations": true
+  },
   "plugin": "dev.isxander.controlify.compatibility.sodium.SodiumMixinPlugin",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_25",
   "client": [
     "SodiumOptionsGUIMixin"
   ],

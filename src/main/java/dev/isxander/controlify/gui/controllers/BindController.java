@@ -114,7 +114,7 @@ public class BindController implements Controller<Input> {
 
         private void openConsumerScreen() {
             awaitingControllerInput = true;
-            Minecraft.getInstance().setScreen(new BindConsumerScreen(this::getPressedBind, control.option(), this, Minecraft.getInstance().screen));
+            dev.isxander.controlify.utils.MinecraftUtil.setScreen(new BindConsumerScreen(this::getPressedBind, control.option(), this, dev.isxander.controlify.utils.MinecraftUtil.getScreen()));
         }
 
         @Override

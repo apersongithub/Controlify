@@ -72,7 +72,7 @@ public class BindConsumerScreen extends Screen implements ScreenProcessorProvide
             if (ticksTillClose == 0) {
                 widgetToFocus.awaitingControllerInput = false;
                 // don't call setScreen because will cause background to re-init
-                minecraft.screen = backgroundScreen;
+                dev.isxander.controlify.utils.MinecraftUtil.forceSetScreen(backgroundScreen);
             }
         }
 

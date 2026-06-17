@@ -187,7 +187,7 @@ public class SubmitUnknownControllerScreen extends Screen implements DontInterup
         dontShowAgain();
 
         Controlify.instance().config().saveIfDirty();
-        minecraft.setScreen(lastScreen);
+        dev.isxander.controlify.utils.MinecraftUtil.setScreen(lastScreen);
     }
 
     @Override

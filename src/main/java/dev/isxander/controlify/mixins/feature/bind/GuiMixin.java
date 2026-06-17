@@ -1,25 +1,19 @@
 package dev.isxander.controlify.mixins.feature.bind;
 
-import dev.isxander.controlify.gui.screen.RadialMenuScreen;
-import net.minecraft.client.DeltaTracker;
-import net.minecraft.client.Minecraft;
+import dev.isxander.controlify.api.ControlifyApi;
+import dev.isxander.controlify.controller.ControllerEntity;
+import dev.isxander.controlify.controller.input.InputComponent;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Gui.class)
 public class GuiMixin {
-    @Shadow @Final private Minecraft minecraft;
-
-    @Inject(method = "extractCrosshair(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V", at = @At("HEAD"), cancellable = true)
-    private void shouldRenderCrosshair(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
-        if (minecraft.screen instanceof RadialMenuScreen) {
-            ci.cancel();
-        }
+    @Inject(method = "setScreen", at = @At("HEAD"))
+    private void notifyBindGuiOutputOfScreenChange(CallbackInfo ci) {
+        ControlifyApi.get().getCurrentController().flatMap(ControllerEntity::input)
+                .ifPresent(InputComponent::notifyGuiPressOutputsOfNavigate);
     }
 }

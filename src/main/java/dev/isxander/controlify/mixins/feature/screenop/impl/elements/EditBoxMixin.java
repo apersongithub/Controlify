@@ -62,7 +62,7 @@ public abstract class EditBoxMixin extends AbstractWidget implements ComponentPr
                 && controller.genericConfig().config().showOnScreenKeyboard
                 && controller.genericConfig().config().showScreenGuides
                 && ControlifyApi.get().currentInputMode().isController()
-                && !(Minecraft.getInstance().screen instanceof KeyboardOverlayScreen)
+                && !(dev.isxander.controlify.utils.MinecraftUtil.getScreen() instanceof KeyboardOverlayScreen)
                 && processor.getKeyboardBehaviour() instanceof ComponentKeyboardBehaviour.Handled
             ) {
                 int textX = this.getX() + (this.isBordered() ? 2 : 0) + 2;

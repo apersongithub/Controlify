@@ -9,7 +9,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 public final class GuideRenderer {
     private GuideRenderer() {}
 
-    public static void render(GuiGraphicsExtractor graphics, GuideDomain<?> domain, Minecraft minecraft, boolean bottomAligned, boolean textContrast) {
+    public static void extractRenderState(GuiGraphicsExtractor graphics, GuideDomain<?> domain, Minecraft minecraft, boolean bottomAligned, boolean textContrast) {
         int width = minecraft.getWindow().getGuiScaledWidth();
         int height = minecraft.getWindow().getGuiScaledHeight();
 
@@ -62,7 +62,7 @@ public final class GuideRenderer {
 
         @Override
         public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
-            GuideRenderer.render(guiGraphics, domain, minecraft, bottomAligned, textContrast);
+            GuideRenderer.extractRenderState(guiGraphics, domain, minecraft, bottomAligned, textContrast);
         }
 
         public void setBottomAligned(boolean bottomAligned) {

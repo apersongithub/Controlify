@@ -8,15 +8,15 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(AbstractContainerScreen.class)
 public interface AbstractContainerScreenAccessor {
-    @Accessor
-    Slot getHoveredSlot();
+    @Accessor("hoveredSlot")
+    Slot controlify$getHoveredSlot();
 
-    @Invoker
-    boolean invokeHasClickedOutside(double mouseX, double mouseY, int left, int top /*? if <1.21.9 {*/ /*,int button *//*?}*/);
+    @Invoker("hasClickedOutside")
+    boolean controlify$invokeHasClickedOutside(double mouseX, double mouseY, int left, int top /*? if <1.21.9 {*/ /*,int button *//*?}*/);
 
-    @Accessor
-    int getLeftPos();
+    @Accessor("leftPos")
+    int controlify$getLeftPos();
 
-    @Accessor
-    int getTopPos();
+    @Accessor("topPos")
+    int controlify$getTopPos();
 }

@@ -77,7 +77,7 @@ public class ControllerCarouselScreen extends Screen implements ScreenController
     }
 
     public static void openConfigScreen(Screen parent) {
-        Minecraft.getInstance().setScreen(new ControllerCarouselScreen(parent));
+        dev.isxander.controlify.utils.MinecraftUtil.setScreen(new ControllerCarouselScreen(parent));
     }
 
     @Override
@@ -100,7 +100,7 @@ public class ControllerCarouselScreen extends Screen implements ScreenController
 
         GridLayout grid = new GridLayout().columnSpacing(10);
         GridLayout.RowHelper rowHelper = grid.createRowHelper(2);
-        globalSettingsButton = rowHelper.addChild(Button.builder(Component.translatable("controlify.gui.global_settings.title"), btn -> minecraft.setScreen(GlobalSettingsScreenFactory.createGlobalSettingsScreen(this))).build());
+        globalSettingsButton = rowHelper.addChild(Button.builder(Component.translatable("controlify.gui.global_settings.title"), btn -> dev.isxander.controlify.utils.MinecraftUtil.setScreen(GlobalSettingsScreenFactory.createGlobalSettingsScreen(this))).build());
         doneButton = rowHelper.addChild(Button.builder(CommonComponents.GUI_DONE, btn -> this.onClose()).build());
         grid.visitWidgets(widget -> {
             widget.setTabOrderGroup(1);
@@ -200,7 +200,7 @@ public class ControllerCarouselScreen extends Screen implements ScreenController
 
         Blit.tex(
                 graphics,
-                minecraft.level == null ? AbstractSelectionListAccessor.getMenuListBackground() : AbstractSelectionListAccessor.getInWorldMenuListBackground(),
+                minecraft.level == null ? AbstractSelectionListAccessor.controlify$getMenuListBackground() : AbstractSelectionListAccessor.controlify$getInWorldMenuListBackground(),
                 0, 0,
                 0f, 0f,
                 width, footerY,
@@ -237,7 +237,7 @@ public class ControllerCarouselScreen extends Screen implements ScreenController
 
     @Override
     public void onClose() {
-        minecraft.setScreen(parent);
+        dev.isxander.controlify.utils.MinecraftUtil.setScreen(parent);
     }
 
     private abstract class CarouselEntry extends AbstractContainerEventHandler implements Renderable, NarratableEntry {
@@ -509,7 +509,7 @@ public class ControllerCarouselScreen extends Screen implements ScreenController
 
         @Override
         protected void onSettingsButtonPressed(Button button) {
-            minecraft.setScreen(ControllerConfigScreenFactory.generateConfigScreen(ControllerCarouselScreen.this, controller));
+            dev.isxander.controlify.utils.MinecraftUtil.setScreen(ControllerConfigScreenFactory.generateConfigScreen(ControllerCarouselScreen.this, controller));
         }
 
         @Override

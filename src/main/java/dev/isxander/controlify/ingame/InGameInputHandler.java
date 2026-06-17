@@ -81,7 +81,7 @@ public class InGameInputHandler {
     }
 
     protected void handleKeybinds() {
-        if (minecraft.screen != null)
+        if (dev.isxander.controlify.utils.MinecraftUtil.getScreen() != null)
             return;
 
         if (ControlifyBindings.PAUSE.on(controller).justPressed()) {
@@ -143,7 +143,7 @@ public class InGameInputHandler {
                     minecraft.player.sendOpenInventory();
                 } else {
                     minecraft.getTutorial().onOpenInventory();
-                    minecraft.setScreen(new InventoryScreen(minecraft.player));
+                    dev.isxander.controlify.utils.MinecraftUtil.setScreen(new InventoryScreen(minecraft.player));
                 }
             }
 
@@ -154,11 +154,16 @@ public class InGameInputHandler {
                     minecraft.gameRenderer.checkEntityPostEffect(minecraft.options.getCameraType().isFirstPerson() ? minecraft.getCameraEntity() : null);
                 }
 
-                minecraft.levelRenderer.needsUpdate();
+                //? if <26.2
+                //minecraft.levelRenderer.needsUpdate();
             }
         }
         if (ControlifyBindings.TOGGLE_HUD_VISIBILITY.on(controller).justPressed()) {
-            minecraft.options.hideGui = !minecraft.options.hideGui;
+            //? if >=26.2 {
+            minecraft.gui.hud.toggle();
+            //?} else {
+            /*minecraft.options.hideGui = !minecraft.options.hideGui;
+            *///?}
         }
 
         if (ControlifyBindings.SHOW_PLAYER_LIST.on(controller).justPressed()) {
@@ -179,7 +184,7 @@ public class InGameInputHandler {
             DebugOverlayHelper.toggleProfilerOverlay();
         }
         if (ControlifyBindings.DEBUG_RADIAL.on(controller).justPressed()) {
-            minecraft.setScreen(new RadialMenuScreen(
+            dev.isxander.controlify.utils.MinecraftUtil.setScreen(new RadialMenuScreen(
                     controller,
                     ControlifyBindings.DEBUG_RADIAL.on(controller),
                     RadialItems.createDebug(),
@@ -190,15 +195,19 @@ public class InGameInputHandler {
 
         if (ControlifyBindings.TAKE_SCREENSHOT.on(controller).justPressed()) {
             // get file before it takes and writes the screenshot (which changes the next name)
-            File screenshotFile = ScreenshotAccessor.invokeGetFile(
+            File screenshotFile = ScreenshotAccessor.controlify$invokeGetFile(
                     new File(minecraft.gameDirectory, "screenshots")
             );
 
             Screenshot.grab(
                     this.minecraft.gameDirectory,
-                    this.minecraft.getMainRenderTarget(),
+                    //? if >=26.2 {
+                    this.minecraft.gameRenderer.mainRenderTarget(),
+                    //?} else {
+                    /*this.minecraft.getMainRenderTarget(),
+                    *///?}
                     component -> this.minecraft.execute(() -> {
-                        this.minecraft.gui.getChat().addClientSystemMessage(component);
+                        this.minecraft.gui.hud.getChat().addClientSystemMessage(component);
 
                         // TODO: this currently does not work, yet to debug why not
                         SteamDeckDriver.getDeck().ifPresent(deck -> {
@@ -216,7 +225,7 @@ public class InGameInputHandler {
         }
 
         if (ControlifyBindings.RADIAL_MENU.on(controller).justPressed()) {
-            minecraft.setScreen(new RadialMenuScreen(
+            dev.isxander.controlify.utils.MinecraftUtil.setScreen(new RadialMenuScreen(
                     controller,
                     ControlifyBindings.RADIAL_MENU.on(controller),
                     RadialItems.createBindings(controller),
@@ -226,7 +235,7 @@ public class InGameInputHandler {
         }
 
         if (ControlifyBindings.GAME_MODE_SWITCHER.on(controller).justPressed()) {
-            minecraft.setScreen(new RadialMenuScreen(
+            dev.isxander.controlify.utils.MinecraftUtil.setScreen(new RadialMenuScreen(
                     controller,
                     ControlifyBindings.GAME_MODE_SWITCHER.on(controller),
                     RadialItems.createGameModes(),
@@ -236,7 +245,7 @@ public class InGameInputHandler {
         }
 
         if (ControlifyBindings.HOTBAR_SLOT_SELECT.on(controller).justPressed()) {
-            minecraft.setScreen(new RadialMenuScreen(
+            dev.isxander.controlify.utils.MinecraftUtil.setScreen(new RadialMenuScreen(
                     controller,
                     ControlifyBindings.HOTBAR_SLOT_SELECT.on(controller),
                     RadialItems.createHotbarItemSelect(),
@@ -245,9 +254,9 @@ public class InGameInputHandler {
             ));
         }
 
-        if (/*? if >=1.21.5 {*/ minecraft.player.hasInfiniteMaterials() /*?} else {*/ /*this.minecraft.gameMode.hasInfiniteItems() *//*?}*/) {
+        if (/*? if >=1.21.5 {*/ minecraft.player != null && minecraft.player.hasInfiniteMaterials() /*?} else {*/ /*this.minecraft.gameMode.hasInfiniteItems() *//*?}*/) {
             if (ControlifyBindings.HOTBAR_LOAD_RADIAL.on(controller).justPressed()) {
-                minecraft.setScreen(new RadialMenuScreen(
+                dev.isxander.controlify.utils.MinecraftUtil.setScreen(new RadialMenuScreen(
                         controller,
                         ControlifyBindings.HOTBAR_LOAD_RADIAL.on(controller),
                         RadialItems.createHotbarLoad(),
@@ -256,7 +265,7 @@ public class InGameInputHandler {
                 ));
             }
             if (ControlifyBindings.HOTBAR_SAVE_RADIAL.on(controller).justPressed()) {
-                minecraft.setScreen(new RadialMenuScreen(
+                dev.isxander.controlify.utils.MinecraftUtil.setScreen(new RadialMenuScreen(
                         controller,
                         ControlifyBindings.HOTBAR_SAVE_RADIAL.on(controller),
                         RadialItems.createHotbarSave(),
@@ -465,7 +474,7 @@ public class InGameInputHandler {
     private boolean canProcessLookInput() {
         boolean mouseNotGrabbed = !minecraft.mouseHandler.isMouseGrabbed() && !controlify.config().globalSettings().outOfFocusInput;
         boolean outOfFocus = !minecraft.isWindowActive() && !controlify.config().globalSettings().outOfFocusInput;
-        boolean screenVisible = minecraft.screen != null;
+        boolean screenVisible = dev.isxander.controlify.utils.MinecraftUtil.getScreen() != null;
         boolean playerExists = minecraft.player != null;
 
         return !mouseNotGrabbed && !outOfFocus && !screenVisible && playerExists;

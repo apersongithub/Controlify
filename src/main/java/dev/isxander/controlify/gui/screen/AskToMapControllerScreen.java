@@ -11,9 +11,9 @@ public class AskToMapControllerScreen extends ConfirmScreen {
         super(
                 (confirmed) -> {
                     if (confirmed) {
-                        Minecraft.getInstance().setScreen(ControllerMappingMakerScreen.createGamepadMapping(controller.input().orElseThrow(), lastScreen));
+                        dev.isxander.controlify.utils.MinecraftUtil.setScreen(ControllerMappingMakerScreen.createGamepadMapping(controller.input().orElseThrow(), lastScreen));
                     } else {
-                        Minecraft.getInstance().setScreen(lastScreen);
+                        dev.isxander.controlify.utils.MinecraftUtil.setScreen(lastScreen);
                     }
                 },
                 Component.translatable("controlify.ask_to_map_controller.title"),

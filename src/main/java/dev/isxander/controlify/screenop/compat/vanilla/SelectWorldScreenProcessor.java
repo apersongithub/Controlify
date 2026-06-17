@@ -19,13 +19,13 @@ public class SelectWorldScreenProcessor extends ScreenProcessor<SelectWorldScree
         if (ControlifyBindings.GUI_ABSTRACT_ACTION_1.on(controller).justPressed()) {
             playClackSound();
             var minecraft = Minecraft.getInstance();
-            CreateWorldScreen.openFresh(minecraft, /*? if >=1.21.9 {*/() -> minecraft.setScreen(screen) /*?} else {*/ /*screen *//*?}*/);
+            CreateWorldScreen.openFresh(minecraft, /*? if >=1.21.9 {*/() -> dev.isxander.controlify.utils.MinecraftUtil.setScreen(screen) /*?} else {*/ /*screen *//*?}*/);
             return;
         }
 
         if (screen.getFocused() != null && screen.getFocused() instanceof Button) {
             if (ControlifyBindings.GUI_BACK.on(controller).guiPressed().get()) {
-                screen.setFocused(((SelectWorldScreenAccessor) screen).getList());
+                screen.setFocused(((SelectWorldScreenAccessor) screen).controlify$getList());
                 return;
             }
         }

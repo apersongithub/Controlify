@@ -3,6 +3,7 @@ package dev.isxander.controlify.utils;
 import dev.isxander.controlify.mixins.feature.input.DebugScreenOverlayAccessor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 
@@ -45,7 +46,11 @@ public final class DebugOverlayHelper {
     }
 
     public static void reloadChunks() {
-        mc.levelRenderer.allChanged();
+        //? if >=26.2 {
+        mc.levelExtractor.allChanged();
+        //?} else {
+        /*mc.levelRenderer.allChanged();
+        *///?}
         debugFeedbackTranslated("debug.reload_chunks.message");
     }
 
@@ -89,16 +94,22 @@ public final class DebugOverlayHelper {
     }
 
     public static void clearChat() {
-        mc.gui.getChat().clearMessages(false);
+        getChat().clearMessages(false);
     }
 
     private static void debugComponent(ChatFormatting formatting, Component message) {
-        mc
-                .gui
-                .getChat()
+        getChat()
                 .addClientSystemMessage(
                         Component.empty().append(Component.translatable("debug.prefix").withStyle(formatting, ChatFormatting.BOLD)).append(CommonComponents.SPACE).append(message)
                 );
+    }
+
+    private static ChatComponent getChat() {
+        //? if >=26.2 {
+        return mc.gui.hud.getChat();
+        //?} else {
+        /*return mc.gui.getChat();
+        *///?}
     }
 
     private static void debugFeedbackComponent(Component message) {

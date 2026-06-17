@@ -45,12 +45,12 @@ public class RecipeBookScreenProcessor
 
         if (!recipeBookComponent.isVisible()) return;
         RecipeBookComponentAccessor componentAccessor = (RecipeBookComponentAccessor) recipeBookComponent;
-        RecipeBookPageAccessor pageAccessor = (RecipeBookPageAccessor) componentAccessor.getRecipeBookPage();
+        RecipeBookPageAccessor pageAccessor = (RecipeBookPageAccessor) componentAccessor.controlify$getRecipeBookPage();
         List<RecipeBookTabButton> tabs = componentAccessor
-                .getTabButtons()
+                .controlify$getTabButtons()
                 .stream().filter(tab -> tab.visible)
                 .toList();
-        RecipeBookTabButton selectedTab = componentAccessor.getSelectedTab();
+        RecipeBookTabButton selectedTab = componentAccessor.controlify$getSelectedTab();
 
         //? if >=1.21.11 {
         net.minecraft.client.gui.components.ImageButton button = null;
@@ -58,10 +58,10 @@ public class RecipeBookScreenProcessor
         /*net.minecraft.client.gui.components.StateSwitchingButton button = null;
         *///?}
         if (ControlifyBindings.VMOUSE_PAGE_NEXT.on(controller).justPressed()) {
-            button = pageAccessor.getForwardButton();
+            button = pageAccessor.controlify$getForwardButton();
         }
         if (ControlifyBindings.VMOUSE_PAGE_PREV.on(controller).justPressed()) {
-            button = pageAccessor.getBackButton();
+            button = pageAccessor.controlify$getBackButton();
         }
         if (ControlifyBindings.VMOUSE_PAGE_DOWN.on(controller).justPressed()) {
             int index = tabs.indexOf(selectedTab);

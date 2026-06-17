@@ -77,7 +77,11 @@ public final class RadialIcons {
 
             boolean render = true;
             //? if >=1.21.6 {
-            Identifier sprite = Gui.getMobEffectSprite(effect);
+            //? if >=26.2 {
+            Identifier sprite = net.minecraft.client.gui.Hud.getMobEffectSprite(effect);
+            //?} else {
+            /*Identifier sprite = net.minecraft.client.gui.Gui.getMobEffectSprite(effect);
+            *///?}
             //?} else {
             /*TextureAtlasSprite sprite = mobEffectTextureManager.get(effect);
 

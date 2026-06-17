@@ -98,7 +98,7 @@ public class SimpleVoiceChatCompat {
     }
 
     private static void checkConnected() {
-        if (Minecraft.getInstance().getOverlay() == null && Minecraft.getInstance().screen == null) {
+        if (dev.isxander.controlify.utils.MinecraftUtil.getOverlay() == null && dev.isxander.controlify.utils.MinecraftUtil.getScreen() == null) {
             ((KeyEventsAccessor) ClientManager.instance().getKeyEvents()).invokeCheckConnected();
         }
     }

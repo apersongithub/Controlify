@@ -19,6 +19,7 @@ import net.caffeinemc.mods.sodium.client.config.structure.Page;
 import net.caffeinemc.mods.sodium.client.gui.VideoSettingsScreen;
 import net.caffeinemc.mods.sodium.client.gui.options.control.ControlElement;
 import net.caffeinemc.mods.sodium.client.gui.widgets.FlatButtonWidget;
+import net.caffeinemc.mods.sodium.client.gui.widgets.KeyBoundButtonWidget;
 import net.caffeinemc.mods.sodium.client.gui.widgets.OptionListWidget;
 
 @Mixin(VideoSettingsScreen.class)
@@ -28,12 +29,15 @@ public abstract class SodiumOptionsGUIMixin extends Screen implements ScreenProc
     @Shadow
     public abstract void jumpToPage(Page page);
 
-    @Shadow
-    private FlatButtonWidget applyButton;
-    @Shadow
-    private FlatButtonWidget closeButton;
-    @Shadow
-    private FlatButtonWidget undoButton;
+    //? if >=26.2 {
+    @Shadow private KeyBoundButtonWidget applyButton;
+    @Shadow private KeyBoundButtonWidget closeButton;
+    @Shadow private KeyBoundButtonWidget undoButton;
+    //?} else {
+    /*@Shadow private FlatButtonWidget applyButton;
+    @Shadow private FlatButtonWidget closeButton;
+    @Shadow private FlatButtonWidget undoButton;
+    *///?}
     @Unique private final SodiumGuiScreenProcessor controlify$screenProcessor
             = new SodiumGuiScreenProcessor(this, this);
 

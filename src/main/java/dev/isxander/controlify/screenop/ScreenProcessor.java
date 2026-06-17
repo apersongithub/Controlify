@@ -81,7 +81,7 @@ public class ScreenProcessor<T extends Screen> {
                         .anyMatch(component -> ComponentProcessorProvider.provide(component).shouldKeepFocusOnKeyboardMode(this));
 
                 if (!shouldKeepFocus) {
-                    ((ScreenAccessor) screen).invokeClearFocus();
+                    ((ScreenAccessor) screen).controlify$invokeClearFocus();
                 }
             }
             case CONTROLLER, MIXED -> {
@@ -180,7 +180,7 @@ public class ScreenProcessor<T extends Screen> {
         }
 
         return () -> {
-            ((ScreenAccessor) screen).invokeChangeFocus(path);
+            ((ScreenAccessor) screen).controlify$invokeChangeFocus(path);
             return true;
         };
     }
@@ -242,8 +242,8 @@ public class ScreenProcessor<T extends Screen> {
                     .findAny()
                     .ifPresent(navBar -> {
                         var accessor = (TabNavigationBarAccessor) navBar;
-                        List<Tab> tabs = accessor.getTabs();
-                        int currentIndex = tabs.indexOf(accessor.getTabManager().getCurrentTab());
+                        List<Tab> tabs = accessor.controlify$getTabs();
+                        int currentIndex = tabs.indexOf(accessor.controlify$getTabManager().getCurrentTab());
 
                         int newIndex = currentIndex + (prevTab ? -1 : 1);
                         if (newIndex < 0) newIndex = tabs.size() - 1;
@@ -269,7 +269,7 @@ public class ScreenProcessor<T extends Screen> {
 
     public void onVirtualMouseToggled(boolean enabled) {
         if (enabled) {
-            ((ScreenAccessor) screen).invokeClearFocus();
+            ((ScreenAccessor) screen).controlify$invokeClearFocus();
         } else {
             ((ScreenAccessor) screen).invokeSetInitialFocus();
         }
@@ -305,7 +305,7 @@ public class ScreenProcessor<T extends Screen> {
                     KeyboardOverlayScreen.KeyboardPositioner positioner
             ) -> {
                 if (controller.genericConfig().config().showOnScreenKeyboard) {
-                    minecraft.setScreen(new KeyboardOverlayScreen(screen, layout, inputTarget, positioner));
+                    dev.isxander.controlify.utils.MinecraftUtil.setScreen(new KeyboardOverlayScreen(screen, layout, inputTarget, positioner));
                 }
                 return true;
             }

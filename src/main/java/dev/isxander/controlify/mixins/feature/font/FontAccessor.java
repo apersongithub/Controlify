@@ -13,8 +13,8 @@ import net.minecraft.client.gui.font.glyphs.BakedGlyph;
 @Mixin(Font.class)
 public interface FontAccessor {
     //? if >=1.21.9 {
-    @Invoker
-    BakedGlyph invokeGetGlyph(int i, Style style);
+    @Invoker("getGlyph")
+    BakedGlyph controlify$invokeGetGlyph(int i, Style style);
     //?} else {
     /*@Invoker
     FontSet invokeGetFontSet(Identifier id);

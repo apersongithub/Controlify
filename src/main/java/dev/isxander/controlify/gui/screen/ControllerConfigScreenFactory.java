@@ -335,7 +335,7 @@ public class ControllerConfigScreenFactory {
                 .description(OptionDescription.createBuilder()
                         .text(Component.translatable("controlify.gui.auto_calibration.tooltip"))
                         .build())
-                .action((screen, button) -> Minecraft.getInstance().setScreen(new ControllerCalibrationScreen(controller, () -> {
+                .action((screen, button) -> dev.isxander.controlify.utils.MinecraftUtil.setScreen(new ControllerCalibrationScreen(controller, () -> {
                     deadzoneOpts.forEach(Option::forgetPendingValue);
                     return screen;
                 })))
@@ -378,7 +378,7 @@ public class ControllerConfigScreenFactory {
                 .option(ButtonOption.createBuilder()
                         .name(Component.translatable("controlify.gui.create_gamepad_mapping"))
                         .description(OptionDescription.of(Component.translatable("controlify.gui.create_gamepad_mapping.tooltip")))
-                        .action((screen, button) -> Minecraft.getInstance().setScreen(ControllerMappingMakerScreen.createGamepadMapping(input, screen)))
+                        .action((screen, button) -> dev.isxander.controlify.utils.MinecraftUtil.setScreen(ControllerMappingMakerScreen.createGamepadMapping(input, screen)))
                         .build())
                 .option(ButtonOption.createBuilder()
                         .name(Component.translatable("controlify.gui.clear_mapping"))
@@ -605,7 +605,7 @@ public class ControllerConfigScreenFactory {
                         .text(Component.translatable("controlify.gui.radial_menu.tooltip"))
                         .text(newOptionLabel)
                         .build())
-                .action((screen, opt) -> Minecraft.getInstance().setScreen(new RadialMenuScreen(
+                .action((screen, opt) -> dev.isxander.controlify.utils.MinecraftUtil.setScreen(new RadialMenuScreen(
                         controller,
                         null,
                         RadialItems.createBindings(controller),

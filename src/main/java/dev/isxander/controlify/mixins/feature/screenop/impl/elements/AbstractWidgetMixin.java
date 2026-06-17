@@ -38,7 +38,7 @@ public class AbstractWidgetMixin {
         ControllerEntity controller = controlify.getCurrentController().orElse(null);
 
         if (controller != null && controlify.virtualMouseHandler().isVirtualMouseEnabled()) {
-            var screenProcessor = ScreenProcessorProvider.provide(Minecraft.getInstance().screen);
+            var screenProcessor = ScreenProcessorProvider.provide(dev.isxander.controlify.utils.MinecraftUtil.getScreen());
             return !screenProcessor.tryOpenKeyboard(controller, (AbstractWidget) (Object) this);
         }
 

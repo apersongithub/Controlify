@@ -11,7 +11,7 @@ public class NoSDLScreen extends AlertScreen {
         super(
                 () -> {
                     actionHandler.run();
-                    Minecraft.getInstance().setScreen(parent);
+                    dev.isxander.controlify.utils.MinecraftUtil.setScreen(parent);
                 },
                 Component.translatable("controlify.gui.no_sdl.title"),
                 Component.translatable("controlify.gui.no_sdl.message"),

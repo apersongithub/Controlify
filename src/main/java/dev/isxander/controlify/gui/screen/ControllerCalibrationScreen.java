@@ -291,7 +291,7 @@ public class ControllerCalibrationScreen extends Screen implements DontInteruptS
 
     @Override
     public void onClose() {
-        minecraft.setScreen(parent.get());
+        dev.isxander.controlify.utils.MinecraftUtil.setScreen(parent.get());
     }
 
     @Override

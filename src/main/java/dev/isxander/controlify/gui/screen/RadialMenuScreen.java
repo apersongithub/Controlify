@@ -222,7 +222,7 @@ public class RadialMenuScreen extends Screen implements ScreenControllerEventLis
     @Override
     public void onClose() {
         Controlify.instance().config().saveIfDirty();
-        minecraft.setScreen(parent);
+        dev.isxander.controlify.utils.MinecraftUtil.setScreen(parent);
     }
 
     @Override

@@ -142,7 +142,7 @@ public class KeyboardOverlayScreen extends Screen {
     public void onClose() {
         // restore the previous screen without calling minecraft.setScreen
         // so the screen is not reinitialised
-        this.minecraft.screen = this.backgroundScreen;
+        dev.isxander.controlify.utils.MinecraftUtil.forceSetScreen(this.backgroundScreen);
 
         Controlify.instance().virtualMouseHandler().onScreenChanged();
     }

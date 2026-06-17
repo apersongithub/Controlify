@@ -37,7 +37,7 @@ public class KeyMappingEmulationOutput implements DigitalOutput {
         if (ControlifyApi.get().getCurrentController().orElse(null) != controller)
             return; // only emulate current controller
 
-        if (Minecraft.getInstance().screen != null)
+        if (dev.isxander.controlify.utils.MinecraftUtil.getScreen() != null)
             return; // minecraft keybinds don't work in gui screens it conflicts
 
         KeyMappingHandle handle = (KeyMappingHandle) keyMapping;

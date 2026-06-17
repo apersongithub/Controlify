@@ -103,7 +103,7 @@ public class DownloadingSDLScreen extends Screen implements DontInteruptScreen {
     }
 
     public void finishDownload() {
-        minecraft.setScreen(screenOnFinish);
+        dev.isxander.controlify.utils.MinecraftUtil.setScreen(screenOnFinish);
     }
 
     public void failDownload(Throwable th) {

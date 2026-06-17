@@ -20,7 +20,7 @@ public class OpenControllerCarouselAction extends Action {
 
     @Override
     public void execute(@Nullable String s) {
-        ControllerCarouselScreen.openConfigScreen(Minecraft.getInstance().screen);
+        ControllerCarouselScreen.openConfigScreen(dev.isxander.controlify.utils.MinecraftUtil.getScreen());
     }
 
     @Override

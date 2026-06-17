@@ -38,7 +38,7 @@ public class ControllerSetupWizard {
     }
 
     public boolean isDone() {
-        Screen screen = Minecraft.getInstance().screen;
+        Screen screen = dev.isxander.controlify.utils.MinecraftUtil.getScreen();
         return screen == null || screens.stream().noneMatch(resultantScreen -> resultantScreen == screen);
     }
 
